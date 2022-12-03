@@ -1,9 +1,31 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
+const mySocket = new WebSocket("wss://bikn00yvi1.execute-api.us-west-2.amazonaws.com/production/");
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [name, setName] = useState('')
+
+  useEffect(()=>{
+    
+    mySocket.onopen = (e) => {
+      console.log('OPEN: ');
+      console.log(e);
+    }
+
+    mySocket.onmessage = (e) => {
+      console.log(e);
+    }
+  }, []);
+
+const myAction = {
+  action: 'jointable'
+}
+
+const handleClick = () => {
+  mySocket.send(JSON.stringify(myAction));
+}
 
   return (
     <div className="App">
@@ -17,8 +39,10 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} autoComplete="false"></input>
+        <br></br>
+        <button onClick={handleClick}>
+          name is {name}
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
