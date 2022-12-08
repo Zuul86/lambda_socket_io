@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
-const mySocket = new WebSocket("wss://bikn00yvi1.execute-api.us-west-2.amazonaws.com/production/");
+const mySocket = new WebSocket("wss://733l6u90dc.execute-api.us-west-2.amazonaws.com/dev");
 
 function App() {
   const [name, setName] = useState('')
+  const [tableName, setTableName] = useState('')
 
   useEffect(()=>{
     
@@ -20,7 +21,9 @@ function App() {
   }, []);
 
 const myAction = {
-  action: 'jointable'
+  action: 'jointable',
+  tableName: tableName,
+  userName: name
 }
 
 const handleClick = () => {
@@ -39,10 +42,11 @@ const handleClick = () => {
       </div>
       <h1>Vite + React</h1>
       <div className="card">
-        <input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} autoComplete="false"></input>
+        Name:<input type="text" id="name" value={name} onChange={(e) => setName(e.target.value)} autoComplete="false"></input><br></br>
+        Table:<input type="text" id="table" value={tableName} onChange={(e) => setTableName(e.target.value)} autoComplete="false"></input>
         <br></br>
         <button onClick={handleClick}>
-          name is {name}
+          Join Table
         </button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
