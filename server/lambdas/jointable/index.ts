@@ -8,7 +8,7 @@ export const handler = async (event: APIGatewayEvent, context: Context): Promise
 
    const client = new DynamoDBClient({ region: "us-west-2" });
 
-   if (event.body === null){
+   if (event.body === null) {
       return {
          statusCode: 400,
          body: JSON.stringify({
@@ -17,7 +17,7 @@ export const handler = async (event: APIGatewayEvent, context: Context): Promise
       }
    }
 
-   if(!event.requestContext?.connectionId){
+   if (!event.requestContext?.connectionId) {
       return {
          statusCode: 400,
          body: JSON.stringify({
@@ -27,18 +27,18 @@ export const handler = async (event: APIGatewayEvent, context: Context): Promise
    }
 
    const tableName: string = JSON.parse(event.body).tableName;
-   const userName:string = JSON.parse(event.body).userName;
-   const connectionId:string =  event.requestContext?.connectionId;
+   const userName: string = JSON.parse(event.body).userName;
+   const connectionId: string = event.requestContext?.connectionId;
 
    const document = {
       TableName: tableName,
-      TableCreateDate: Date.now(),
+      TableCreateDateTime: Date.now(),
       UserName: userName,
       ConnectionId: connectionId
    };
 
    const params: PutItemCommandInput = {
-      TableName: "PlaningPokerTable",
+      TableName: "PlanningPokerTable",
       Item: marshall(document)
    };
 

@@ -16,7 +16,13 @@ function App() {
     }
 
     mySocket.onmessage = (e) => {
+      console.log('MESSAGE: ');
       console.log(e);
+    }
+
+    mySocket.onclose = (e) => {
+      console.log('CLOSED: ')
+      console.log(e)
     }
   }, []);
 
